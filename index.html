@@ -24,11 +24,11 @@
 <meta name="twitter:image" content="https://swarmdo.com/og-image.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"SoftwareApplication","name":"swarmdo","url":"https://swarmdo.com/","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"Agent swarm orchestration for Claude Code: 60+ agent roles, hive-mind consensus, persistent vector memory with HNSW, and the swarmvector Postgres extension.","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"1.3.0","downloadUrl":"https://github.com/JannieP/swarmdo/releases"},
+ {"@type":"SoftwareApplication","name":"swarmdo","url":"https://swarmdo.com/","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"Agent swarm orchestration for Claude Code: 60+ agent roles, hive-mind consensus, persistent vector memory with HNSW, and the swarmvector Postgres extension.","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"1.4.5","downloadUrl":"https://github.com/JannieP/swarmdo/releases"},
  {"@type":"WebSite","name":"swarmdo","url":"https://swarmdo.com/"},
  {"@type":"FAQPage","mainEntity":[
   {"@type":"Question","name":"What is swarmdo?","acceptedAnswer":{"@type":"Answer","text":"swarmdo turns Claude Code into a coordinated multi-agent system. One prompt spawns a swarm of named agents — researcher, architect, coder, tester, reviewer — that coordinate over messages, share persistent vector memory, and learn from what worked."}},
-  {"@type":"Question","name":"Does swarmdo work with Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Yes — swarmdo is built for Claude Code. It registers as an MCP server (200+ tools), ships agent definitions and skills into .claude/, and adds slash commands like /statusline. Codex is supported through the @swarmdo/codex dual-mode package."}},
+  {"@type":"Question","name":"Does swarmdo work with Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Yes — swarmdo is built for Claude Code. It registers as an MCP server (200+ tools), ships agent definitions and skills into .claude/, and adds slash commands namespaced under /sDo: (e.g. /sDo:statusline). Codex is supported through the @swarmdo/codex dual-mode package."}},
   {"@type":"Question","name":"Is swarmdo free and open source?","acceptedAnswer":{"@type":"Answer","text":"Yes. swarmdo is MIT licensed and based on the original popular ruflo project, with attribution preserved in the repository's LICENSE and NOTICE files. Every engine it uses is vendored in the repository — no external runtime dependencies."}},
   {"@type":"Question","name":"What is swarmvector?","acceptedAnswer":{"@type":"Answer","text":"swarmvector is swarmdo's vector engine family: an embedded vector database with HNSW indexing and ONNX embeddings, plus a pgvector-compatible PostgreSQL extension (CREATE EXTENSION swarmvector) with 230+ SQL functions, SIMD acceleration, and quantization, verified on PostgreSQL 16."}},
   {"@type":"Question","name":"How do I install swarmdo?","acceptedAnswer":{"@type":"Answer","text":"Run npx swarmdo init --wizard to scaffold your project, then claude mcp add swarmdo -- npx -y @swarmdo/cli@latest to register the MCP server. From there, ask Claude Code to use a swarm and swarmdo coordinates the agents."}}
@@ -234,10 +234,11 @@
 <nav>
   <div class="wrap nav-i">
     <span class="brand"><b>▊</b> swarmdo</span>
-    <span class="ver">v1.3.0 · MIT</span>
+    <span class="ver">v1.4.5 · MIT</span>
     <div class="nav-links">
       <a href="#statusline">statusline</a>
       <a href="#features">features</a>
+      <a href="#toolkit">toolkit</a>
       <a href="#engines">engines</a>
       <a href="#efficiency">efficiency</a>
       <a href="#install">install</a>
@@ -293,9 +294,10 @@
       <div class="feat"><svg class="diag" viewBox="0 0 300 96" aria-hidden="true"><circle cx="40" cy="30" r="2.5" fill="#66737f"/><circle cx="58" cy="52" r="2.5" fill="#66737f"/><circle cx="76" cy="24" r="2.5" fill="#66737f"/><circle cx="96" cy="66" r="2.5" fill="#66737f"/><circle cx="118" cy="38" r="2.5" fill="#66737f"/><circle cx="142" cy="58" r="2.5" fill="#66737f"/><circle cx="170" cy="28" r="2.5" fill="#66737f"/><circle cx="196" cy="70" r="2.5" fill="#66737f"/><circle cx="222" cy="44" r="3.2" fill="#83b98a"/><circle cx="238" cy="36" r="3.2" fill="#83b98a"/><circle cx="230" cy="58" r="3.2" fill="#83b98a"/><circle cx="250" cy="50" r="3.2" fill="#83b98a"/><circle cx="236" cy="47" r="22" fill="none" stroke="#e2a33c" stroke-width="1.4" stroke-dasharray="4 4"/><circle cx="236" cy="47" r="3.6" fill="#e2a33c"/><text x="40" y="90" font-family="monospace" font-size="9" fill="#66737f">HNSW query → nearest neighbours</text></svg><h3><span class="fk">⛁</span>Vector memory</h3><p>AgentDB-backed persistent memory with HNSW indexing — semantic search across sessions, namespaces shared by every agent in the swarm.</p></div>
       <div class="feat"><h3><span class="fk">⚡</span>swarmvector for Postgres</h3><p>A pgvector-compatible extension with 230+ SQL functions, SIMD, and quantization. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">CREATE EXTENSION swarmvector</code> — verified on PostgreSQL 16.</p></div>
       <div class="feat"><h3><span class="fk">🪝</span>Self-learning hooks</h3><p>27 lifecycle hooks and 12 background workers record what succeeded, train routing patterns, and preload context before you ask.</p></div>
-      <div class="feat"><h3><span class="fk">🪨</span>Caveman compression</h3><p>Why use many token when few token do trick. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/caveman-compress</code> rewrites memory files into few-token caveman-speak — substance, code, and URLs preserved, backup kept. Vendored from the 82k-star original (MIT).</p></div>
-      <div class="feat"><h3><span class="fk">💤</span>Ponytail mode</h3><p>The laziest senior dev in the room, on demand. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/ponytail</code> forces the simplest solution that works: YAGNI, stdlib before dependencies, one line before fifty. Three intensities + audit and review lenses (MIT).</p></div>
-      <div class="feat"><h3><span class="fk">▊</span>A statusline you control</h3><p>Eleven segments, three presets, one checklist. Run <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/statusline</code> inside Claude Code and tick exactly what you want to see.</p></div>
+      <div class="feat"><h3><span class="fk">🪨</span>Caveman compression</h3><p>Why use many token when few token do trick. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/sdo-caveman-compress</code> rewrites memory files into few-token caveman-speak — substance, code, and URLs preserved, backup kept. Vendored from the 82k-star original (MIT).</p></div>
+      <div class="feat"><h3><span class="fk">💤</span>Ponytail mode</h3><p>The laziest senior dev in the room, on demand. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/sdo-ponytail</code> forces the simplest solution that works: YAGNI, stdlib before dependencies, one line before fifty. Three intensities + audit and review lenses (MIT).</p></div>
+      <div class="feat"><h3><span class="fk">▊</span>A statusline you control</h3><p>Eleven segments, three presets, one checklist. Run <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/sDo:statusline</code> inside Claude Code and tick exactly what you want to see.</p></div>
+      <div class="feat"><h3><span class="fk">🗂</span>One namespace</h3><p>Every swarmdo slash command groups under <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/sDo:</code> (skills <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">/sdo-</code>). Type /sDo in Claude Code and the whole toolkit surfaces together — legacy unprefixed copies auto-migrate on init.</p></div>
     </div>
     <div class="sl-embed" id="statusline">
       <p class="sl-embed-title"><span class="fk" style="color:var(--honey)">▊</span> Try it — the statusline, your way</p>
@@ -325,6 +327,25 @@
 </section>
 
 
+<section id="toolkit">
+  <div class="wrap">
+    <p class="sec-label">Operator tools</p>
+    <h2>Ship-day tools, built in.</h2>
+    <p class="sec-lede">The v1.3&ndash;v1.4 train added a day-to-day operations layer around the swarm &mdash; spend, safety, releases, and memory portability. No plugins required.</p>
+    <div class="feat-grid">
+      <div class="feat"><h3><span class="fk">📊</span>Spend analytics</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo usage</code> reads your local Claude Code transcripts: daily/monthly/model/project views, live 5-hour block burn, tool-failure analytics, and prompt-cache efficiency with dollars saved.</p></div>
+      <div class="feat"><h3><span class="fk">⛔</span>Budget guard</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">usage guard --block-usd 5 --strict</code> turns limits for the active 5h block, today, or the month into ok/warn/over &mdash; exit&nbsp;1 when over, safe for CI gates and Stop hooks.</p></div>
+      <div class="feat"><h3><span class="fk">▥</span>Ops HUD</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo hud --watch</code> is one screen for the whole install: block burn, task readiness, daemon workers, memory snapshots.</p></div>
+      <div class="feat"><h3><span class="fk">🔧</span>Test-driven repair</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo repair</code> runs a bounded, budget-capped headless claude loop that edits source until a failing test passes. Dry-run unless you <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">--confirm</code>.</p></div>
+      <div class="feat"><h3><span class="fk">🌿</span>Worktree isolation</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo wt</code> gives parallel agents their own git worktrees &mdash; add, list, diff, merge, remove &mdash; so concurrent edits never collide.</p></div>
+      <div class="feat"><h3><span class="fk">📜</span>Release notes</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo changelog --out NOTES.md</code> groups your conventional commits into linked release notes, ready for <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">gh release create</code>.</p></div>
+      <div class="feat"><h3><span class="fk">🔔</span>Hooks in one command</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo hooks recipe notify-done --apply</code> installs &ldquo;ping me when Claude finishes&rdquo; as a real Stop hook &mdash; idempotent, dry-run by default, never clobbers your settings. Desktop toasts via <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">hooks notify -d</code>.</p></div>
+      <div class="feat"><h3><span class="fk">🗃</span>Obsidian roundtrip</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">memory export -f obsidian</code> renders the vector DB as a markdown vault &mdash; frontmatter, live [[wikilinks]] &mdash; edit in Obsidian, then <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">memory import -f obsidian</code> syncs it back, re-embedded.</p></div>
+      <div class="feat"><h3><span class="fk">🪜</span>Preset ladder</h3><p><code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">init --preset basic</code> &mdash; five named tiers from minimal to max instead of dozens of flags. <code style="font-family:var(--mono);font-size:12.5px;color:var(--bright)">swarmdo preset info</code> explains every rung.</p></div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
     <p class="sec-label">Honest numbers</p>
@@ -347,7 +368,7 @@
     <div class="eff-grid">
       <div class="eff">
         <h3><span class="fk">🪨</span>Caveman compression</h3>
-        <p>Memory files (CLAUDE.md, notes, todos) get re-read every session — and they're written for humans, not token budgets. <code>/caveman-compress</code> rewrites them in few-token caveman-speak: substance, code, and URLs preserved, original backed up.</p>
+        <p>Memory files (CLAUDE.md, notes, todos) get re-read every session — and they're written for humans, not token budgets. <code>/sdo-caveman-compress</code> rewrites them in few-token caveman-speak: substance, code, and URLs preserved, original backed up.</p>
         <div class="eff-term" role="img" aria-label="before and after caveman compression">
           <div class="eff-pane"><span class="eff-tag">before · 891 bytes</span>The team prefers that all new modules are written in TypeScript with strict mode enabled. When you are creating a new API endpoint, please remember to add input validation…</div>
           <div class="eff-arrow">→ 33% smaller</div>
@@ -357,7 +378,7 @@
       </div>
       <div class="eff">
         <h3><span class="fk">💤</span>Ponytail mode</h3>
-        <p>The laziest senior dev in the room, on demand. <code>/ponytail</code> applies one lens to everything: the best code is the code never written.</p>
+        <p>The laziest senior dev in the room, on demand. <code>/sdo-ponytail</code> applies one lens to everything: the best code is the code never written.</p>
         <ul class="eff-rules">
           <li>Question whether the task needs to exist at all (YAGNI)</li>
           <li>Standard library before dependencies</li>
@@ -401,7 +422,7 @@
     <div class="steps" style="margin-top:36px">
       <div class="step"><span class="step-n">1</span><div>
         <div class="code"><span class="ps">$</span> npx swarmdo init --wizard</div>
-        <p>Scaffolds .claude/ with agents, skills, hooks, and the /statusline command.</p>
+        <p>Scaffolds .claude/ with agents, skills, hooks, and the /sDo:statusline command.</p>
       </div></div>
       <div class="step"><span class="step-n">2</span><div>
         <div class="code"><span class="ps">$</span> claude mcp add swarmdo -- npx -y @swarmdo/cli@latest</div>
@@ -422,7 +443,7 @@
     <h2>Questions people actually ask.</h2>
     <div class="faq-list">
       <details><summary>What is swarmdo?</summary><p>swarmdo turns Claude Code into a coordinated multi-agent system. One prompt spawns a swarm of named agents — researcher, architect, coder, tester, reviewer — that coordinate over messages, share persistent vector memory, and learn from what worked.</p></details>
-      <details><summary>Does it work with Claude Code?</summary><p>Yes — it&rsquo;s built for it. swarmdo registers as an MCP server (200+ tools), ships agents and skills into <code>.claude/</code>, and adds slash commands like <code>/statusline</code>. Codex runs alongside through the dual-mode package.</p></details>
+      <details><summary>Does it work with Claude Code?</summary><p>Yes — it&rsquo;s built for it. swarmdo registers as an MCP server (200+ tools), ships agents and skills into <code>.claude/</code>, and adds slash commands like <code>/sDo:statusline</code>. Codex runs alongside through the dual-mode package.</p></details>
       <details><summary>Is it free and open source?</summary><p>MIT licensed, based on the original popular ruflo — attribution preserved in LICENSE and NOTICE. Every engine is vendored in the repo; nothing phones home.</p></details>
       <details><summary>What is swarmvector?</summary><p>The vector engine family: an embedded vector database with HNSW indexing and ONNX embeddings, plus a pgvector-compatible Postgres extension — <code>CREATE EXTENSION swarmvector</code> — with 230+ SQL functions, verified on PostgreSQL 16.</p></details>
       <details><summary>How do I install it?</summary><p><code>npx swarmdo init --wizard</code>, then <code>claude mcp add swarmdo -- npx -y @swarmdo/cli@latest</code>. Ask Claude Code to &ldquo;use a swarm&rdquo; and swarmdo does the coordinating.</p></details>
@@ -527,7 +548,7 @@
     var lines=[];
     var head=[];
     var idBits="";
-    if(has("version")) idBits+=sp("c-pur b","▊ Swarmdo V1.3.0 ");
+    if(has("version")) idBits+=sp("c-pur b","▊ Swarmdo V1.4.5 ");
     if(has("project")) idBits+=sp("c-cy","● my-project");
     if(idBits) head.push(idBits);
     if(has("branch")) head.push(sp("c-bl","⏇ main")+" "+sp("c-gr","+2")+sp("c-ye","~1"));
